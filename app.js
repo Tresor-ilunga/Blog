@@ -3,11 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const Article = require('./models/article.model');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/blog')
+.then(()=>console.log("Connexion à mongoDB réussie"))
+.catch(()=>console.log("Connexion à mongoDB échouée"));
+
+for (let index = 0; index < 10; index++) {
+  var article = new Article({
+    name: "Article "+index,
+    content: "Content "+index, 
+    publishedAt:  Date.now()
+  })
+  
+  article.save()
+  .then(()=>console.log("Sauvegarde réussie"))
+  .catch(()=>console.log("Sauvegarde échouée"));
+  
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
