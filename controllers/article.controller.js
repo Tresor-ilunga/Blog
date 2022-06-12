@@ -35,3 +35,15 @@ exports.add = (req, res) => {
             res.redirect('/');
         })
 }
+
+exports.addOne = (req, res) => {
+    var article = new Article({
+        ...req.body,
+        publishedAt: Date.now()
+    });
+    article.save()
+        .then('add-article', { success: "Merci, votre article a été ajouté" })
+        .catch(() => {
+            res.render('add-article', { error: "Désolé, une erreur s'est produite. Merci de réessayer plus tard" })
+        });
+}
