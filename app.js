@@ -3,12 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//const Article = require('./models/article.model');
+const Article = require('./models/article.model');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+for (let index = 0; index < 8; index++) {
+  article = new Article({
+    name: 'Qu\'est-ce que le Lorem Ipsum?',
+    content: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression',
+    publishedAt: Date.now()
+  })
+  //article.save();
+  
+}
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/blog')
